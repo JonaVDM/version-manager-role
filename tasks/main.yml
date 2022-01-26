@@ -1,2 +1,25 @@
 ---
 # tasks file for version-manager-role
+- name: Install node
+  when: nvm_version != ""
+  shell: |
+    source ~/.nvm/nvm.sh
+    nvm install {{ nvm_version }}
+    nvm alias default {{ nvm_version }}
+    nvm use {{ nvm_version }}
+    creates="~/.nvm/versions/node/v{{ nvm_version }}"
+
+- name: Make sure the right version of python is installed
+  when: py_version != ""
+  shell: |
+    pyenv install {{ py_version }}
+    pyenv global {{ py_version }}
+    creates="~/.pyenv/versions/{{ py_version }}"
+
+- name: Make sure the right version of go is installed
+  when: gvm_version != ""
+  shell: |
+    source ~/.gvm/scripts/gvm
+    gvm install {{ gvm_version }} -B
+    gvm use {{ gvm_version }} --default
+    creates="~/.gvm/gos/{{ gvm_version }}"

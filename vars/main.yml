@@ -1,2 +1,5 @@
 ---
 # vars file for version-manager-role
+nvm_version:
+gvm_version:
+py_version:
